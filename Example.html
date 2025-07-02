@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>JavaScript Fundamentals Example</title>
+</head>
+<body>
+  <h1> Open Console to See Output</h1>
+
+  <script>
+    //  1. Browser vs Node.js environment
+    console.log("Running in Browser:", typeof window !== "undefined");
+
+    //  2. let vs const vs var and data types
+    let name = "Alice";                // string
+    const age = 25;                    // number
+    var isLoggedIn = true;            // boolean
+    let hobbies = ["reading", "code"]; // array
+    let user = { name, age };         // object
+    let nothing = null;               // null
+    let notDefined;                   // undefined
+    console.log(name, age, isLoggedIn, hobbies, user, nothing, notDefined);
+
+    //  3. Scopes
+    let globalVar = "I am global";
+    function scopeTest() {
+      let localVar = "I am local";
+      console.log(globalVar); // accessible
+      // console.log(localVar); //  not accessible outside
+    }
+    scopeTest();
+
+    //  4. Primitives vs Reference Types
+    let x = 10;
+    let y = x;
+    y = 20;
+    console.log("Primitive x:", x); // 10
+
+    let obj1 = { value: 10 };
+    let obj2 = obj1;
+    obj2.value = 50;
+    console.log("Reference obj1:", obj1.value); // 50
+
+    //  5. Regular function vs Arrow function
+    function greet(name) {
+      return "Hello " + name;
+    }
+    const greetArrow = name => `Hi ${name}`;
+    console.log(greet("Alice"));
+    console.log(greetArrow("Bob"));
+
+    //  6. Object properties and methods
+    const student = {
+      name: "Charlie",
+      age: 20,
+      showDetails: function () {
+        console.log(`${this.name} is ${this.age} years old.`);
+      }
+    };
+    student.showDetails();
+
+    //  7. Object and Array Destructuring
+    const { name: studentName, age: studentAge } = student;
+    const [firstHobby, secondHobby] = hobbies;
+    console.log("Destructured:", studentName, studentAge, firstHobby, secondHobby);
+
+    // 8. Spread and Rest operators
+    const nums = [1, 2, 3];
+    const moreNums = [...nums, 4, 5];
+    console.log("Spread:", moreNums);
+
+    function addAll(...args) {
+      return args.reduce((sum, num) => sum + num, 0);
+    }
+    console.log("Rest:", addAll(1, 2, 3, 4)); // 10
+
+    //  9. setTimeout and setInterval
+    setTimeout(() => {
+      console.log("Timeout after 2s");
+    }, 2000);
+
+    let count = 0;
+    const interval = setInterval(() => {
+      console.log(" Interval:", ++count);
+      if (count === 3) clearInterval(interval);
+    }, 1000);
+
+    //  10. Fetch API (GET)
+    fetch("https://jsonplaceholder.typicode.com/posts/1")
+      .then(res => res.json())
+      .then(data => {
+        console.log(" Fetched Title:", data.title);
+      });
+
+    //  11. JSON data handling
+    const jsonString = '{"city":"Delhi","pin":110001}';
+    const jsonData = JSON.parse(jsonString);
+    console.log("Parsed JSON:", jsonData.city);
+
+    const backToString = JSON.stringify(jsonData);
+    console.log("Back to String:", backToString);
+
+    //  12. Error handling
+    try {
+      let marks = 101;
+      if (marks > 100) throw new Error("Marks cannot be more than 100");
+    } catch (err) {
+      console.error("Error:", err.message);
+    } finally {
+      console.log("Finally always runs");
+    }
+
+    // 13. Higher-order functions and Closures
+    function makeMultiplier(x) {
+      return function(y) {
+        return x * y;
+      };
+    }
+    const double = makeMultiplier(2);
+    const triple = makeMultiplier(3);
+    console.log("Closure double(5):", double(5)); // 10
+    console.log("Closure triple(4):", triple(4)); // 12
+
+    // Higher-order function example
+    function operate(fn, a, b) {
+      return fn(a, b);
+    }
+    const add = (a, b) => a + b;
+    const subtract = (a, b) => a - b;
+
+    console.log("HOF Add:", operate(add, 10, 5)); // 15
+    console.log("HOF Subtract:", operate(subtract, 10, 5)); // 5
+
+  </script>
+</body>
+</html>
